@@ -25,6 +25,73 @@ git clone https://github.com/yourusername/ComfyUI-NodeSample
 4. Search for "ComfyUI Node Sample"
 5. Click Install
 
+## Dependencies Management
+
+This project demonstrates how to properly manage dependencies in your ComfyUI custom nodes.
+
+### Method 1: Using requirements.txt
+1. Create a `requirements.txt` file in your project root:
+```txt
+Pillow>=9.0.0
+numpy>=1.21.0
+```
+ComfyUI Manager will automatically install these dependencies when users install your node.
+
+### Method 2: Using install.py
+For more complex dependency management:
+
+1. Create an `install.py` script in your project root:
+```python
+import os
+import subprocess
+import sys
+
+def ensure_dependencies():
+    # Get the directory where this script is located
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    
+    # Get Python executable path from ComfyUI's environment
+    python = sys.executable
+    
+    print("Installing dependencies...")
+    
+    # Install dependencies using pip in the correct Python environment
+    subprocess.check_call([python, '-m', 'pip', 'install', '-r', 
+                          os.path.join(script_dir, 'requirements.txt')])
+
+if __name__ == "__main__":
+    ensure_dependencies()
+```
+
+### Best Practices for Dependency Management
+1. **Version Specification**:
+   - Always specify minimum version requirements
+   - Use `>=` for minimum version requirements
+   - Example: `Pillow>=9.0.0`
+
+2. **Dependency Isolation**:
+   - Use ComfyUI's Python environment
+   - Don't modify system-wide Python packages
+   - Test your dependencies with different ComfyUI versions
+
+3. **Conflict Prevention**:
+   - Check for existing dependencies in ComfyUI
+   - Use compatible versions with ComfyUI's requirements
+   - Document any potential conflicts
+
+4. **Error Handling**:
+   - Add proper error messages for missing dependencies
+   - Provide troubleshooting steps in documentation
+   - Example code for checking dependencies:
+```python
+try:
+    import PIL
+    import numpy as np
+except ImportError:
+    print("Required dependencies are not installed. Please install them using:")
+    print("pip install -r requirements.txt")
+```
+
 ## Usage
 
 1. Start ComfyUI
