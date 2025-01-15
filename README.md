@@ -1,5 +1,7 @@
 # ComfyUI Node Sample
 
+[English](README.md) | [中文](README.zh-CN.md)
+
 A simple ComfyUI node example project to help beginners learn how to develop ComfyUI nodes.
 
 ## Features
